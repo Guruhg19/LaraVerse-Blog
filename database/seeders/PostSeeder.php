@@ -15,13 +15,17 @@ class PostSeeder extends Seeder
     public function run(): void
     {
         $judul = [
-            'Indonesia Raya',
-            'Hari Merdeka',
-            'Bagimu Negeri',
             'Satu Nusa Satu Bangsa'
         ];
+
         foreach ($judul as $j){
             $slug = Str::slug($j);
+            $slugOri = $slug;
+            $count = 1;
+            while(Post::where('slug', $slug)->exists()){
+                $slug = $slugOri . '-' . $count;
+                $count++;
+            }
             Post::create([
                 'title' => $j,
                 'slug' => $slug,
