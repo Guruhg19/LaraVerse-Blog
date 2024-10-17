@@ -14,8 +14,9 @@ class BlogController extends Controller
      */
     public function index()
     {
+        $jumlahData = 2;
         $user = Auth::user();
-        $data = Post::where('user_id', $user->id)->orderBy('id','desc')->get();
+        $data = Post::where('user_id', $user->id)->orderBy('id','desc')->paginate($jumlahData);
         return view('member.blogs.index',compact('data'));
     }
 
