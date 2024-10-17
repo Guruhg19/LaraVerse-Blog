@@ -18,6 +18,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     // Blog routes
     Route::get('/member/blogs',[BlogController::class, 'index'])->name('blog.index');
+    Route::get('/member/blogs/{post}/edit',[BlogController::class, 'edit']);
+
+    Route::resource('/member/blogs',BlogController::class)->names([
+        'index' => 'member.blogs.index', 
+        'edit' => 'member.blogs.edit'
+    ]);
 });
 
 require __DIR__.'/auth.php';
