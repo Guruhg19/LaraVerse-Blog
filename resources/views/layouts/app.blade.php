@@ -36,6 +36,12 @@
                                 </ul>
                             </div>
                         @endif
+
+                        @if (session('success'))
+                        <div class="max-w-7xl mx-auto bg-green-500 p-3 mt-3 text-white rounded-md">
+                            {{ session('success') }}
+                        </div>
+                        @endif
                     </div>
                 </header>
             @endisset

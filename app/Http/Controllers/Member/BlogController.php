@@ -61,7 +61,7 @@ class BlogController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
-            'thumbnail' => 'images|mimes:png,jpg,jpeg|max:10240',
+            'thumbnail' => 'image|mimes:png,jpg,jpeg|max:10240',
             'content' => 'required',
         ],
         [
@@ -73,8 +73,22 @@ class BlogController extends Controller
             'content.required' => 'Konten wajib diisi'
         ]);
 
-        
+        if($request->hasFile('thumbnail')){
+            $image = $request->file('thumbnail');
+            $image_name = time() . "_" . $image->getClientOriginalName();
+            $destination_path = public_path('thumbnails');
+            $image->move($destination_path, $image_name);
+        }
+        $data = [
+            'title' => $request->title,
+            'description' => $request->description,
+            'thumbnail' => isset($image_name) ? $image_name : $post->thumbnail,
+            'content' => $request->content,
+            'status' => $request->status
+        ];
 
+        Post::where('id',$post->id)->update($data);
+        return redirect()->route('member.blogs.index')->with('success','Data berhasil di Ubah');
     }
 
     /**
