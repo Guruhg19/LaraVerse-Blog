@@ -49,7 +49,8 @@ class BlogController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('member.blogs.edit');
+        $data = $post;
+        return view('member.blogs.edit', compact('data'));
     }
 
     /**

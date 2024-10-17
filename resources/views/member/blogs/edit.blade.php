@@ -24,25 +24,25 @@
                             @method('put')
                             <div>
                                 <x-input-label for="title" value="Title" />
-                                <x-text-input id="title" name="title" type="text" class="mt-1 block w-full" />
+                                <x-text-input id="title" name="title" type="text" class="mt-1 block w-full" value="{{ old('title',$data->title) }}" />
                             </div>
                             <div>
                                 <x-input-label for="description" value="Description" />
-                                <x-text-input id="description" name="description" type="text" class="mt-1 block w-full" />
+                                <x-text-input id="description" name="description" type="text" class="mt-1 block w-full" value="{{ old('description',$data->description) }}"/>
                             </div>
                             <div>
                                 <x-input-label for="file_input" value="Thumbnail" />
                                 <input type="file" class="w-full border border-gray-300 rounded-md">
                             </div>
                             <div>
-                                <input id="x" type="hidden" name="content">
-                                <trix-editor input="x" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm min-h-80"></trix-editor>
+                                <x-textarea-trix value="{{ $data->content }}" id="x" name="content"></x-textarea-trix>
                             </div>
                             <div>
-                            <select name="status" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
-                                <option value="draft">Simpan sebagai Draft</option>
-                                <option value="publish">Simpan sebagai Publish</option>
-                            </select>
+                            <x-select name="status">
+                                <option value="draft" {{ (old('status', $data->status) == 'draft') ? 'selected' : ''  }}>Simpan sebagai Draft</option>
+                                <option value="publish" {{ (old('status', $data->status) == 'publish') ? 'selected' : ''  }}>Simpan sebagai Publish</option>
+                            </x-select>
+
                         </div>
                         <div class="flex items-center gap-4">
                             <a href="{{ route('member.blogs.index') }}">
